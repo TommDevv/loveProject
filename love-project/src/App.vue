@@ -3,20 +3,34 @@
 </script>
 
 <template>
-  <div class="center-title">
-    <p>El componente funcionaa</p>
-  </div>
+  <p>HOLA MUNDO</p>
 </template>
 
 <style scoped>
-  .center-title{
-    font-weight: bold;
-    font-size: 24px;
-    padding: 20px;
-    text-align: center;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+  .sky-layer {
+    position: fixed;
+    inset: 0;
+    background-image: url('assets/sky/background.png');
+    background-size: cover;
+    background-position: center 0%;
+    z-index: -10;
+    pointer-events: none;
+  }
+
+  .ground-layer {
+    position: relative;
+    z-index: 1;
+    min-height: 200vh;
+    background-image: url('assets/ground/ground.png');
+  }
+
+  .chest-layer {
+    width: 400px;
+    margin: 0 auto;
+    margin-top: 50vh;
+  }
+
+  .spacer {
+  height: 100vh;
   }
 </style>
