@@ -35,6 +35,7 @@
                     left: point.x + '%',
                     top: point.y + '%'
                 }"
+                @click="emitToggleModal(point.id)"
              ></div>
           </div>
     </div>
@@ -49,6 +50,11 @@
     
     const props = defineProps<{
         showConstellation?: boolean;
+    }>();
+
+    const emit = defineEmits<{
+        (e: 'toggle-modal-1', value: boolean): void;
+        (e: 'toggle-modal-2', value: boolean): void;
     }>();
 
     const scrollY = ref<number>(0);
@@ -71,7 +77,7 @@
     }));
 
     const constWrapperStyle = computed(() => ({
-        transform: `translateY(${-scrollY.value * 0.05}px)`
+        transform: `translateY(${-scrollY.value * 0.2}px)`
     }));
 
     onMounted(() => {
@@ -84,6 +90,10 @@
 
     function getPoint(id:number | undefined): {id:number, x:number, y:number} | undefined {
         return constellationPoints.value.find(p => p.id === id); 
+    }
+
+    function emitToggleModal(id:number){
+        emit(`toggle-modal-${id}`, true);
     }
 
     //Referencia de posicion de los puntos de las constelaciones
