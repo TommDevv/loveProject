@@ -53,14 +53,15 @@
     }>();
 
     const emit = defineEmits<{
-        (e: 'toggle-modal-1', value: boolean): void;
-        (e: 'toggle-modal-2', value: boolean): void;
+        (e: 'open-modal', id: number): void;
+        (e: 'parallax-scroll', value: number): void;
     }>();
 
     const scrollY = ref<number>(0);
     //listener para cuando el uruario haga scroll
     const onScroll = () => {
         scrollY.value = window.scrollY;
+        emit('parallax-scroll', scrollY.value);
     };
 
     //modificadores del scroll para efectuar estilo "parallax"
@@ -93,7 +94,7 @@
     }
 
     function emitToggleModal(id:number){
-        emit(`toggle-modal-${id}`, true);
+        emit('open-modal', id);
     }
 
     //Referencia de posicion de los puntos de las constelaciones
@@ -254,7 +255,6 @@
         z-index: 5;
         height: 100%;
     }
-
 
     html, body {
     margin: 0;
