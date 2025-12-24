@@ -1,7 +1,20 @@
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, onBeforeMount } from 'vue'
   import StarrySkyBackground from './components/starry-sky.vue'
   import BaseModal from './components/BaseModal.vue'
+
+  // Imports de imágenes para carga previa y uso en template
+  import background1 from './assets/memories/background1.jpg'
+  import background2 from './assets/memories/background2.jpg'
+  import background3 from './assets/memories/background 3.jpg'
+  import background4 from './assets/memories/background 4.jpg'
+  import pergamino2 from './assets/memories/pergamino2.png'
+  import primerBeso from './assets/memories/primer beso.jpg'
+  import mariposasAmarillas from './assets/memories/mariposas amarillas.jpg'
+  import besoPollo from './assets/memories/beso-pollo.jpg'
+  import chicaTumblr1 from './assets/memories/chica-tumblr.jpg'
+  import chicaTumblr2 from './assets/memories/chica-tumblr2.jpg'
+  import groundImage from './assets/ground/vecteezy_graphics-design-grass-on-white-background-vector_8071361-Photoroom.png'
 
   const showConstLines = ref(false)
   const showModal = ref(false)
@@ -28,6 +41,16 @@
   onMounted(() => {
         handleOpenModal(0);
     });
+
+  // Precarga de imágenes antes del primer render
+  onBeforeMount(() => {
+    const imagesToPreload = [
+      background1, background2, background3, background4,
+      pergamino2, primerBeso, mariposasAmarillas, besoPollo,
+      chicaTumblr1, chicaTumblr2, groundImage
+    ]
+    imagesToPreload.forEach(src => { const img = new Image(); img.src = src })
+  })
   
   function closeAndCheckModal(){
     showModal.value = false;
@@ -102,15 +125,15 @@
     </StarrySkyBackground>
 
     <div class="memories-wrapper" :style="{transform: `translateY(${-mainOffset * 0.2}px)`}" v-if="showConstLines">
-      <img src="./assets/memories/background1.jpg" style="top: 40px; left: 100px; animation-delay: 0s;"/>
-      <img src="./assets/memories/background2.jpg" style="top: 50px; right: 100px; animation-delay: 1s;"/>
-      <img src="./assets/memories/background 3.jpg" style="bottom: 130px; left: 30px; animation-delay: 2s;"/>
-      <img src="./assets/memories/background 4.jpg" style="bottom: 150px; right: 70px; animation-delay: 3s;"/>
+      <img :src="background1" style="top: 40px; left: 100px; animation-delay: 0s;"/>
+      <img :src="background2" style="top: 50px; right: 100px; animation-delay: 1s;"/>
+      <img :src="background3" style="bottom: 130px; left: 30px; animation-delay: 2s;"/>
+      <img :src="background4" style="bottom: 150px; right: 70px; animation-delay: 3s;"/>
     </div>
 
     <div class="second-title-container" v-if="showConstLines">
       <h1 class="title-container medievalsharp-regular">
-        <img src="./assets/memories/pergamino2.png" @click="handleOpenModal(7)"/>
+        <img :src="pergamino2" @click="handleOpenModal(7)"/>
         <span class="blur-2">You Are My Density</span>
         <span class="text">You Are My Density</span>
       </h1>
@@ -141,7 +164,7 @@
       <div id="answer-1" v-if="modalContent == 1 && answer1">
         <h2 style="color:black">Nuestro Primer Beso</h2>
         <div class="image-wrapper">
-          <img src="./assets/memories/primer beso.jpg" alt="Nuestro Primer Beso" />
+          <img :src="primerBeso" alt="Nuestro Primer Beso" />
         </div>
         <label style="font-weight: bold; margin-bottom: 10px;">El dia que me enamore del sabor de tus labios y desde entonces no quiero dejar de besarte jamás</label>
       </div>
@@ -177,7 +200,7 @@
       <div id="answer-3" v-if="modalContent == 3 && answer3">
         <h2 style="color:black">No solo para el estrés, tambien para recordar lo que me haces sentir</h2>
         <div class="image-wrapper">
-          <img src="./assets/memories/mariposas amarillas.jpg" alt="Mariposas amarillas" />
+          <img :src="mariposasAmarillas" alt="Mariposas amarillas" />
         </div>
         <label style="font-weight: bold; margin-bottom: 10px;">
               Esa foto me hizo imaginar como nos veríamos de bonitos siendo pareja, mi amor, tu eres un sueño del que nunca quiero despertar. 
@@ -216,7 +239,7 @@
       <div id="answer-3" v-if="modalContent == 5 && answer5">
         <h2 style="color:black">Tu y yo todos los dias haciendo mucho mua mua así a dos cuadras del mar, piensalo</h2>
         <div class="image-wrapper">
-          <img src="./assets/memories/beso-pollo.jpg" alt="Mariposas amarillas" />
+          <img :src="besoPollo" alt="Mariposas amarillas" />
         </div>
         <label style="font-weight: bold; margin-bottom: 10px;">
               Puede ser asi para siempre. ¿Si quieres? Siono
@@ -235,10 +258,10 @@
         <h2 style="color:black">Mi Chica Tumblr</h2>
         <div style="display: flex; gap: 10px; justify-content: center; align-items: center;">
           <div class="image-wrapper" style="flex: 1; max-width: 400px;">
-        <img src="./assets/memories/chica-tumblr.jpg" alt="Chica Tumblr 1" />
+        <img :src="chicaTumblr1" alt="Chica Tumblr 1" />
           </div>
           <div class="image-wrapper" style="flex: 1; max-width: 400px;">
-        <img src="./assets/memories/chica-tumblr2.jpg" alt="Chica Tumblr 2" />
+        <img :src="chicaTumblr2" alt="Chica Tumblr 2" />
           </div>
         </div>
         <label style="font-weight: bold; margin-bottom: 10px; display: block; font-size: 18px;">
@@ -281,7 +304,7 @@
       </div>
     </BaseModal>
 
-    <div class="ground"></div>
+    <div class="ground" :style="{ backgroundImage: `url(${groundImage})` }"></div>
   </div>
 </template>
 
@@ -304,7 +327,6 @@
     width: 100vw;
     margin-left: calc(-50vw + 50%);
     display: block;
-    background-image: url('./assets/ground/vecteezy_graphics-design-grass-on-white-background-vector_8071361-Photoroom.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center bottom;
